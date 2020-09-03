@@ -1,0 +1,22 @@
+
+.folder{
+    max-height: 392px;
+    overflow: hidden;
+    /* margin-top: 25px; */
+}
+.top_folder{
+    background: #343A40;
+    padding: 0px 10px;
+    text-align: center;
+    min-height: 26px;
+}
+.top_folder a{
+    display: inline-block;
+    width: 20%;
+    /* border-left: 1px solid #5d5959;
+    border-right: 1px solid #5d5959; */
+}
+
+.lengs{
+    color: white;
+}
