@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NPC comerciante para Valheim — Jesús David Marcano</title>
+  <meta name="description" content="Mod de Valheim que agrega un NPC con el que los jugadores conversan, con respuestas generadas por un asistente LLM propio.">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="/#inicio">Jesús David Marcano</a>
+      <nav aria-label="Principal">
+        <ul class="site-nav">
+          <li><a href="/#inicio">Inicio</a></li>
+          <li><a href="/#sobre-mi">Sobre mí</a></li>
+          <li><a href="/#proyectos" aria-current="page">Proyectos</a></li>
+          <li><a href="/#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-head container">
+      <a class="back-link" href="/#proyectos">← Todos los proyectos</a>
+      <h1>NPC comerciante para Valheim <span class="badge">En progreso</span></h1>
+      <p class="page-lead">Un mod de Valheim que agrega un NPC con el que los jugadores pueden conversar, usando un asistente LLM propio en vez de diálogos guionados.</p>
+      <ul class="tag-list">
+        <li>C#</li>
+        <li>BepInEx</li>
+        <li>Jötunn</li>
+        <li>Valheim</li>
+        <li>LLM</li>
+      </ul>
+      <p class="note">El repositorio es privado por ahora, así que todavía no hay un enlace público al código.</p>
+    </div>
+
+    <div class="prose container">
+      <h2>Qué es</h2>
+      <p>Un mod escrito en C# sobre BepInEx y Jötunn. El NPC es un enano que camina cerca de su punto; no ataca ni recibe daño. Cualquier jugador conectado puede hablar con él, y lo que responde lo genera un asistente LLM autohospedado.</p>
+
+      <h2>Cómo funciona</h2>
+      <p>El jugador abre un panel en el juego y escribe su pregunta. El servidor dedicado consulta al asistente y devuelve la respuesta, que se muestra en el panel y en un globo de diálogo sobre el NPC.</p>
+      <p>El mismo archivo se carga en el cliente y en el servidor, pero sólo el servidor puede consultar al asistente: las credenciales no llegan nunca a los clientes de los jugadores.</p>
+
+      <h2>Estado</h2>
+      <p>En desarrollo. Ya conversa con un jugador en un servidor de pruebas. Falta probarlo con varios jugadores a la vez y desplegarlo en el servidor real.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Jesús David Marcano</p>
+      <p>
+        <a href="https://github.com/jesus-david">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/jesus-david-marcano-7b1889200/">LinkedIn</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

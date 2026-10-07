@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="es" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mirage Stream — Jesús David Marcano</title>
+  <meta name="description" content="Mirage Stream: pantalla virtual para streaming con Sunshine en Linux, sin dummy plug, con NVIDIA y Wayland.">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="logo" href="/#inicio">Jesús David Marcano</a>
+      <nav aria-label="Principal">
+        <ul class="site-nav">
+          <li><a href="/#inicio">Inicio</a></li>
+          <li><a href="/#sobre-mi">Sobre mí</a></li>
+          <li><a href="/#proyectos" aria-current="page">Proyectos</a></li>
+          <li><a href="/#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-head container">
+      <a class="back-link" href="/#proyectos">← Todos los proyectos</a>
+      <h1>Mirage Stream <span class="badge">Código abierto</span></h1>
+      <p class="page-lead">Una pantalla virtual para hacer streaming con Sunshine desde Linux, sin dummy plug. Pensada para los drivers propietarios de NVIDIA y KDE Plasma 6 sobre Wayland.</p>
+      <ul class="tag-list">
+        <li>Shell</li>
+        <li>Python</li>
+        <li>NVIDIA</li>
+        <li>Sunshine</li>
+        <li>Wayland</li>
+      </ul>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://github.com/jesus-david/mirage-stream" target="_blank" rel="noopener noreferrer">Ver en GitHub</a>
+      </div>
+    </div>
+
+    <div class="prose container">
+      <h2>El problema</h2>
+      <p>Al transmitir el escritorio con <a href="https://github.com/LizardByte/Sunshine" target="_blank" rel="noopener noreferrer">Sunshine</a> y Moonlight conviene una pantalla virtual dedicada: que exista sólo mientras hay un cliente conectado, que tome la resolución nativa del cliente y que no choque con los monitores físicos.</p>
+
+      <h2>Por qué los métodos habituales fallan en NVIDIA</h2>
+      <ul>
+        <li><code>VKMS</code> crea un dispositivo DRM sin render node. La captura KMS de NVIDIA lo necesita, y Sunshine responde con el error 503.</li>
+        <li>Inyectar un EDID simple (<code>drm.edid_firmware</code> a secas): NVIDIA lee los metadatos, pero no enumera modos sin el flag <code>video=:e</code>.</li>
+        <li><code>video=:e</code> a secas crea un conector sin ningún modo disponible.</li>
+        <li>Un EDID genérico topa el pixel clock en unos 165 MHz, el ancho de banda de HDMI 1.4, salvo que incluya los bloques HDMI Vendor Specific Data.</li>
+        <li>Un dummy plug barato enlaza sólo a HBR, con el mismo tope de unos 150 MHz.</li>
+      </ul>
+
+      <h2>La solución</h2>
+      <p>Inyectar un EDID hecho a medida, con los bloques HDMI que NVIDIA exige, y forzar el conector con un parámetro de kernel. Los dos parámetros se usan juntos:</p>
+      <pre><code>drm.edid_firmware=HDMI-A-1:edid/virtual.bin video=HDMI-A-1:e</code></pre>
+      <p>Un script en Python genera el EDID con dos bloques: el HDMI Vendor Specific Data Block, que declara un reloj TMDS máximo de 600 MHz, y el HDMI Forum VSDB, que declara soporte de HDMI 2.1 y SCDC. Sin ellos NVIDIA no activa el CRTC: la resolución queda en 0×0 y Sunshine devuelve el error 503.</p>
+
+      <h2>Instalación</h2>
+      <p>En Fedora y Nobara hay un instalador que detecta la tarjeta NVIDIA, el conector libre, el render node, la herramienta de initramfs, el gestor de arranque y el display manager, y configura todo. Con <code>--dry-run</code> muestra los cambios sin aplicarlos y con <code>uninstall</code> los revierte.</p>
+      <p>Para Arch y CachyOS la guía es manual, paso a paso. También hay un perfil nativo para Hyprland, sin EDID.</p>
+
+      <h2>Probado en</h2>
+      <ul>
+        <li>CachyOS (Arch) con KDE Plasma 6 sobre Wayland.</li>
+        <li>Fedora 44 KDE, con KDE Plasma 6 y con Hyprland, sobre Wayland.</li>
+        <li>Nobara 43 con KDE Plasma 6 sobre Wayland.</li>
+      </ul>
+      <p>Las tres con una RTX 4060 Ti. También se reportó funcionando en una RTX 5080. Licencia MIT.</p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 Jesús David Marcano</p>
+      <p>
+        <a href="https://github.com/jesus-david">GitHub</a> ·
+        <a href="https://www.linkedin.com/in/jesus-david-marcano-7b1889200/">LinkedIn</a>
+      </p>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

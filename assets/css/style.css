@@ -13,6 +13,7 @@
 
   --font-heading: "Space Grotesk", "Arial", sans-serif;
   --font-body: "IBM Plex Sans", "Arial", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
 
   --space-1: 0.5rem;
   --space-2: 1rem;
@@ -23,6 +24,7 @@
 
   --content-max: 68rem;
   --radius: 4px;
+  --header-h: 4rem;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -35,6 +37,14 @@
 
 html {
   color-scheme: dark;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -78,7 +88,8 @@ img {
 .container {
   max-width: var(--content-max);
   margin: 0 auto;
-  padding: 0 var(--space-3);
+  padding-left: var(--space-3);
+  padding-right: var(--space-3);
 }
 
 /* Reveal-on-scroll: hidden until .js-reveal gets .is-visible.
@@ -107,9 +118,15 @@ img {
   transform: none;
 }
 
-/* ---------- Header ---------- */
+/* ---------- Header (fijo; la pestaña activa la marca main.js) ---------- */
 .site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
   border-bottom: 1px solid var(--color-border);
+  background: rgba(20, 18, 15, 0.92);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
 }
 
 .site-header .container {
@@ -117,9 +134,8 @@ img {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-2);
-  padding-top: var(--space-2);
-  padding-bottom: var(--space-2);
+  gap: var(--space-1) var(--space-2);
+  min-height: var(--header-h);
 }
 
 .logo {
@@ -146,42 +162,54 @@ img {
 }
 
 .site-nav a {
+  display: block;
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
   color: var(--color-text-dim);
   font-size: 0.95rem;
+  transition: color 0.2s, border-color 0.2s;
 }
 
 .site-nav a:hover,
-.site-nav a:focus-visible,
-.site-nav a[aria-current="page"] {
+.site-nav a:focus-visible {
   color: var(--color-text);
   text-decoration: none;
 }
 
-.site-nav a[aria-current="page"] {
+.site-nav a[aria-current] {
   color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
 }
 
-.lang-toggle {
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-  padding: 0.2rem 0.55rem;
-  font-size: 0.8rem;
-  letter-spacing: 0.03em;
-}
+@media (max-width: 40rem) {
+  :root {
+    --header-h: 5.5rem;
+  }
 
-.lang-toggle:hover,
-.lang-toggle:focus-visible {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-  text-decoration: none;
+  .site-header .container {
+    flex-direction: column;
+    justify-content: center;
+    padding-top: var(--space-1);
+    padding-bottom: var(--space-1);
+  }
+
+  .site-nav {
+    gap: var(--space-2);
+  }
 }
 
 /* ---------- Hero ---------- */
 .hero {
-  padding: var(--space-6) 0 var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-h));
+  min-height: calc(100svh - var(--header-h));
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
 }
 
-.hero-eyebrow {
+.eyebrow {
   font-family: var(--font-heading);
   color: var(--color-accent);
   text-transform: uppercase;
@@ -195,7 +223,7 @@ img {
   max-width: 40rem;
 }
 
-.hero p {
+.hero-lead {
   color: var(--color-text-dim);
   font-size: 1.15rem;
   max-width: 36rem;
@@ -246,7 +274,8 @@ img {
 
 /* ---------- Sections ---------- */
 .section {
-  padding: var(--space-5) 0;
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-5);
   border-top: 1px solid var(--color-border);
 }
 
@@ -261,13 +290,25 @@ img {
   margin-bottom: var(--space-4);
 }
 
+.subhead {
+  margin-top: var(--space-4);
+  font-size: 1.05rem;
+  color: var(--color-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
 /* ---------- Project card ---------- */
 .project-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
   padding: var(--space-4);
   background: var(--color-bg-raised);
   max-width: 42rem;
+  transition: border-color 0.2s;
 }
 
 .project-card h3 {
@@ -276,6 +317,50 @@ img {
   align-items: center;
   gap: var(--space-2);
   font-size: 1.4rem;
+}
+
+.project-card h3 a {
+  color: var(--color-text);
+}
+
+.project-card h3 a:hover,
+.project-card h3 a:focus-visible {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+/* La tarjeta entera es clicable: el enlace del título se estira sobre ella. */
+.project-card h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.project-card:has(h3 a):hover {
+  border-color: var(--color-accent-dim);
+}
+
+.project-card p {
+  margin: 0;
+  color: var(--color-text-dim);
+}
+
+.project-card .more {
+  margin-top: auto;
+  padding-top: var(--space-3);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.project-grid {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+}
+
+.project-grid .project-card {
+  max-width: none;
 }
 
 .badge {
@@ -288,6 +373,7 @@ img {
   border-radius: 999px;
   border: 1px solid var(--color-accent-dim);
   color: var(--color-accent);
+  white-space: nowrap;
 }
 
 .tag-list {
@@ -305,6 +391,105 @@ img {
   border: 1px solid var(--color-border);
   border-radius: 999px;
   padding: 0.15rem 0.6rem;
+}
+
+/* ---------- Página de proyecto ---------- */
+.page-head {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--space-3);
+  color: var(--color-text-dim);
+  font-size: 0.9rem;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+  color: var(--color-accent);
+}
+
+.page-head h1 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: clamp(2rem, 4.5vw, 3rem);
+}
+
+.page-lead {
+  color: var(--color-text-dim);
+  font-size: 1.15rem;
+  max-width: 40rem;
+}
+
+.note {
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-dim);
+  font-size: 0.9rem;
+}
+
+/* .prose es también .container: el bloque ocupa el ancho de la página y su
+   contenido se limita a un ancho de lectura cómodo. */
+.prose {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.prose > * {
+  max-width: 42rem;
+}
+
+.prose h2 {
+  margin-top: var(--space-4);
+  font-size: 1.5rem;
+}
+
+.prose h2:first-child {
+  margin-top: 0;
+}
+
+.prose p,
+.prose li {
+  color: var(--color-text-dim);
+}
+
+.prose ul {
+  padding-left: 1.25rem;
+}
+
+.prose li + li {
+  margin-top: var(--space-1);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  color: var(--color-text);
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 0.05rem 0.3rem;
+}
+
+.prose pre {
+  margin: var(--space-2) 0;
+  padding: var(--space-2);
+  overflow-x: auto;
+  background: var(--color-bg-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+}
+
+.prose pre code {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: 0.85rem;
+  white-space: pre;
 }
 
 /* ---------- Contact ---------- */
@@ -330,6 +515,10 @@ img {
   gap: var(--space-2);
   color: var(--color-text-dim);
   font-size: 0.85rem;
+}
+
+.site-footer p {
+  margin: 0;
 }
 
 .site-footer a {

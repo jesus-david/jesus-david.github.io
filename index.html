@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="es" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jesús David Marcano — Backend &amp; Infrastructure Engineer</title>
-  <meta name="description" content="Backend engineer shipping Go services and AWS infrastructure, building self-hosted tools and side projects.">
+  <title>Jesús David Marcano — Ingeniero Backend e Infraestructura</title>
+  <meta name="description" content="Ingeniero backend que construye servicios en Go e infraestructura en AWS, y crea herramientas propias y proyectos personales.">
   <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,26 +14,91 @@
 <body>
   <header class="site-header">
     <div class="container">
-      <a class="logo" href="/">Jesús David Marcano</a>
-      <ul class="site-nav">
-        <li><a href="/" aria-current="page">Home</a></li>
-        <li><a href="/about.html">About</a></li>
-        <li><a href="/projects.html">Projects</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-        <li><a class="lang-toggle" href="/es/" hreflang="es">ES</a></li>
-      </ul>
+      <a class="logo" href="#inicio">Jesús David Marcano</a>
+      <nav aria-label="Principal">
+        <ul class="site-nav">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#sobre-mi">Sobre mí</a></li>
+          <li><a href="#proyectos">Proyectos</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero container">
-      <p class="hero-eyebrow js-reveal">Backend &amp; Infrastructure Engineer</p>
+    <section id="inicio" class="hero container">
+      <p class="eyebrow js-reveal">Ingeniero Backend e Infraestructura</p>
       <h1 class="js-reveal">Jesús David Marcano</h1>
-      <p class="js-reveal">Backend engineer shipping Go services and AWS infrastructure by day, building self-hosted tools and side projects by night — from CI/CD pipelines to a homelab running his own game servers and automation.</p>
+      <p class="hero-lead js-reveal">Ingeniero backend que construye servicios en Go e infraestructura en AWS de día, y crea herramientas propias y proyectos personales de noche — desde pipelines de CI/CD hasta un homelab que corre sus propios servidores de juego y automatizaciones.</p>
       <div class="hero-actions js-reveal">
-        <a class="btn btn-primary" href="/projects.html">See projects</a>
-        <a class="btn btn-ghost" href="/contact.html">Get in touch</a>
+        <a class="btn btn-primary" href="#proyectos">Ver proyectos</a>
+        <a class="btn btn-ghost" href="#contacto">Escríbeme</a>
       </div>
+    </section>
+
+    <section id="sobre-mi" class="section container">
+      <p class="eyebrow js-reveal">Sobre mí</p>
+      <h2 class="js-reveal">Ingeniero backend, constructor de homelab.</h2>
+
+      <h3 class="subhead js-reveal">Experiencia</h3>
+      <article class="project-card js-reveal">
+        <h3>Bsale <span class="badge">Ago 2021 – Presente</span></h3>
+        <p>Full Stack Developer &amp; DevOps — construyo servicios full-stack y la infraestructura en AWS y los pipelines de CI/CD que los despliegan.</p>
+      </article>
+
+      <h3 class="subhead js-reveal">Certificaciones</h3>
+      <ul class="tag-list js-reveal">
+        <li>AWS Certified Solutions Architect – Associate</li>
+      </ul>
+
+      <h3 class="subhead js-reveal">Más allá del trabajo</h3>
+      <p class="section-lead js-reveal">Una larga lista de proyectos personales en mi propio homelab: servidores de juego, herramientas pequeñas y experimentos con LLMs.</p>
+    </section>
+
+    <section id="proyectos" class="section container">
+      <p class="eyebrow js-reveal">Proyectos</p>
+      <h2 class="js-reveal">Cosas que estoy construyendo.</h2>
+      <p class="section-lead js-reveal">Una lista viva de proyectos personales. Cada uno tiene su propia página.</p>
+
+      <div class="project-grid">
+        <article class="project-card js-reveal">
+          <h3><a href="/projects/mirage-stream.html">Mirage Stream</a> <span class="badge">Código abierto</span></h3>
+          <p>Pantalla virtual para hacer streaming con Sunshine desde Linux, sin dummy plug, sobre NVIDIA y Wayland.</p>
+          <ul class="tag-list">
+            <li>Shell</li>
+            <li>Python</li>
+            <li>NVIDIA</li>
+            <li>Sunshine</li>
+            <li>Wayland</li>
+          </ul>
+          <span class="more" aria-hidden="true">Ver proyecto →</span>
+        </article>
+
+        <article class="project-card js-reveal">
+          <h3><a href="/projects/valheim-npc.html">NPC comerciante para Valheim</a> <span class="badge">En progreso</span></h3>
+          <p>Mod de Valheim que agrega un NPC comerciante con el que los jugadores pueden conversar, usando un asistente LLM propio en vez de diálogos guionados.</p>
+          <ul class="tag-list">
+            <li>C#</li>
+            <li>BepInEx</li>
+            <li>Jötunn</li>
+            <li>Valheim</li>
+            <li>LLM</li>
+          </ul>
+          <span class="more" aria-hidden="true">Ver proyecto →</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="contacto" class="section container">
+      <p class="eyebrow js-reveal">Contacto</p>
+      <h2 class="js-reveal">Hablemos.</h2>
+      <p class="section-lead js-reveal">Escríbeme por LinkedIn o GitHub, o directo por correo.</p>
+      <ul class="contact-links js-reveal">
+        <li><a class="btn btn-primary" href="https://www.linkedin.com/in/jesus-david-marcano-7b1889200/">LinkedIn</a></li>
+        <li><a class="btn btn-ghost" href="https://github.com/jesus-david">GitHub</a></li>
+        <li><a class="btn btn-ghost" href="mailto:jesusdmm18@gmail.com">jesusdmm18@gmail.com</a></li>
+      </ul>
     </section>
   </main>
 
